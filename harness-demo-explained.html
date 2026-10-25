@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Harness Demo Explained</title>
+<style>
+  :root { --bg:#ffffff; --fg:#1f2430; --muted:#5b6475; --card:#f4f6fa; --line:#d9dee8; --accent:#1a56db; --code:#eef1f7; --ok:#0f7b4f; --warn:#d9822b; }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg:#12151c; --fg:#e6e9f0; --muted:#9aa4b8; --card:#1b2030; --line:#2c3347; --accent:#7aa2ff; --code:#1f2538; --ok:#4cc38a; --warn:#e8a05a; }
+  }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--bg); color:var(--fg); font:16px/1.6 system-ui,-apple-system,Segoe UI,Roboto,sans-serif; }
+  main { max-width: 900px; margin: 0 auto; padding: 24px 16px 64px; }
+  h1 { font-size: 1.8rem; margin: 0 0 4px; }
+  h2 { font-size: 1.3rem; margin: 40px 0 12px; padding-top: 8px; border-top: 1px solid var(--line); }
+  h3 { font-size: 1.05rem; margin: 22px 0 6px; }
+  p.lead { color: var(--muted); margin-top: 0; }
+  .card { background:var(--card); border:1px solid var(--line); border-radius:12px; padding:14px 16px; margin:12px 0; }
+  table { width:100%; border-collapse:collapse; font-size:.92rem; display:block; overflow-x:auto; }
+  th,td { text-align:left; padding:8px 10px; border-bottom:1px solid var(--line); vertical-align:top; }
+  th { color:var(--muted); font-weight:600; }
+  code,pre { font-family: ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; font-size:.86rem; }
+  code { background:var(--code); padding:1px 5px; border-radius:5px; }
+  pre { background:var(--code); border:1px solid var(--line); border-radius:10px; padding:12px; overflow-x:auto; }
+  pre code { background:none; padding:0; }
+  .flow { display:flex; flex-direction:column; gap:8px; margin:12px 0; }
+  .step { background:var(--card); border:1px solid var(--line); border-left:4px solid var(--accent); border-radius:8px; padding:10px 14px; }
+  .step b { color:var(--accent); }
+  .arrow { text-align:center; color:var(--muted); line-height:1; }
+  .fork { display:grid; grid-template-columns: 1fr 1fr; gap:8px; }
+  @media (max-width: 620px) { .fork { grid-template-columns: 1fr; } }
+  .lane { border-left-color: var(--ok); }
+  .lane b { color: var(--ok); }
+  .tag { display:inline-block; font-size:.75rem; padding:1px 8px; border-radius:999px; border:1px solid var(--line); color:var(--muted); margin-left:6px; }
+  .warn { border-left:4px solid var(--warn); }
+  .ok { border-left:4px solid var(--ok); }
+  ul { padding-left: 20px; }
+  footer { color:var(--muted); font-size:.85rem; margin-top:40px; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Harness Demo, Explained</h1>
+  <p class="lead">One generic ADK orchestrator. New business workflows are Markdown files, not new Python.</p>
+
+  <div class="card">
+    <b>The big idea.</b> Build the hard infrastructure once (context management, sandboxing, delegation, tracing, identity).
+    Domain experts add workflows by writing <code>SKILL.md</code> files. At runtime the orchestrator reads a short
+    skill index, picks skills, and spins up an isolated sub-agent per skill, each with its own model and tools.
+  </div>
+
+  <h2>1. How a request flows</h2>
+  <p>Example: <i>"Can order C300 be refunded, and which region grew faster Aug to Oct?"</i></p>
+  <div class="flow">
+    <div class="step"><b>Orchestrator</b> (fast Flash model) sees only the <em>skill index</em>: one line per skill.
+      Greetings and "what can you do?" are answered right here, with no delegation.</div>
+    <div class="arrow">&#9660; two independent parts: one turn, two calls</div>
+    <div class="fork">
+      <div class="step lane"><b>delegate_task("refund-policy", task, summary&#8321;)</b><br>Default model. Only <code>lookup_order</code> and <code>check_refund_eligibility</code>. Fresh session.</div>
+      <div class="step lane"><b>delegate_task("sales-analysis", task, summary&#8322;)</b><br>Pro model. Only <code>run_sales_query</code> and <code>run_python</code> (sandboxed). Fresh session.</div>
+    </div>
+    <div class="arrow">&#9650; run concurrently; only the final answers return</div>
+    <div class="step"><b>Orchestrator</b> merges the two answers. A part with a non-ok status is reported as failed, not guessed.</div>
+  </div>
+
+  <h2>2. Concern to code map</h2>
+  <table>
+    <thead><tr><th>Concern</th><th>Technique</th><th>Where</th></tr></thead>
+    <tbody>
+      <tr><td>Context degradation</td><td>Compaction</td><td><code>EventsCompactionConfig</code> in <code>app/agent.py</code></td></tr>
+      <tr><td></td><td>Progressive loading</td><td><code>app/skill_loader.py</code>: index in prompt, body loaded on delegation</td></tr>
+      <tr><td></td><td>Context isolation</td><td><code>app/delegate.py</code>: fresh session, only the final answer returns</td></tr>
+      <tr><td></td><td>Parent-to-child context</td><td><code>context_summary</code> argument, capped at 600 characters</td></tr>
+      <tr><td>Security</td><td>Sandbox, guardrails, identity</td><td><code>app/sandbox.py</code>, <code>app/guardrails.py</code>, <code>deploy/iam.sh</code></td></tr>
+      <tr><td>Generalizability</td><td>Infra once, logic in Markdown</td><td><code>skills/*/SKILL.md</code>, model per skill</td></tr>
+      <tr><td>Observability</td><td>End-to-end tracing</td><td><code>app/telemetry.py</code>, <code>harness.delegate</code> spans</td></tr>
+      <tr><td>Latency</td><td>Direct answers, Flash router, parallel fan-out</td><td><code>app/agent.py</code>, <code>app/config.py</code></td></tr>
+    </tbody>
+  </table>
+
+  <h2>3. Project layout</h2>
+<pre><code>harness-demo/
+  app/
+    agent.py         orchestrator + App with compaction; validates all skills at startup
+    config.py        default/router model, model allowlist, summary cap, timeout
+    delegate.py      delegate_task: isolated sub-agent from a skill, spans, status
+    skill_loader.py  parse + validate + cache skill files
+    telemetry.py     stamps the correlation id on spans
+    tools.py         business tools + TOOL_REGISTRY (plain functions)
+    sandbox.py       async restricted subprocess for generated code
+    guardrails.py    before_tool_callback checks
+  skills/            refund-policy, order-support, sales-analysis  (SKILL.md each)
+  tests/
+    eval/            agents-cli dataset, config, skill_selection metric
+    test_*.py        50 offline tests (scripted models, no network)
+  deploy/iam.sh      least-privilege roles for the agent's identity
+  README.md</code></pre>
+
+  <h2>4. The key pieces</h2>
+
+  <h3>A skill is Markdown, with an optional model <span class="tag">skills/sales-analysis/SKILL.md</span></h3>
+<pre><code>---
+name: sales-analysis
+description: Analyze sales numbers by region or product.
+tools: run_sales_query, run_python
+model: gemini-2.5-pro
+---
+1. Call `run_sales_query` ...
+2. If a calculation is needed, call `run_python` ...</code></pre>
+  <ul>
+    <li>No <code>model:</code> means the default. A model not on the allowlist in <code>config.py</code> fails loudly.</li>
+    <li>Unknown tool, misspelled key, or a name that does not match its folder raises an error at load. Startup fails fast; at runtime only that skill is hidden.</li>
+    <li>Files are parsed once and re-parsed when their mtime or size changes.</li>
+    <li><b>Skill files are a security surface</b>: they set instructions, tools and model. Keep them in version control with required review.</li>
+  </ul>
+
+  <h3>Delegation <span class="tag">app/delegate.py</span></h3>
+<pre><code>skill = get_skill(skill_name)                       # validated, cached
+tools = [TOOL_REGISTRY[t] for t in skill.tools]     # least privilege
+sub_agent = Agent(model=skill.model,                # model per skill
+                  instruction=skill.body + summary, # callable: no {var} templating
+                  tools=tools, before_tool_callback=guard)
+# fresh session; run under a timeout; return only the final text
+# span: skill, model, tools, status, duration_ms, setup_ms, run_ms</code></pre>
+
+  <h3>Context summary from parent to child</h3>
+  <p>The orchestrator writes a <em>new</em> one to three sentence summary for each call: the user's goal, what is already established, and why this skill is being called, with nothing sensitive the skill does not need. It is capped at 600 characters (longer is truncated and the orchestrator is told) and lands in the sub-agent's instruction, labelled as background rather than instructions.</p>
+
+  <h3>Parallel delegation</h3>
+  <p>ADK runs each tool call of one model turn as its own asyncio task. <code>delegate_task</code> is async and shares no mutable state, so independent parts overlap. <b>Gotcha:</b> ADK runs <em>sync</em> tools on the event loop, so a blocking sync tool would freeze all delegations. The sandbox and <code>run_python</code> are async for that reason; real I/O tools should be <code>async def</code>.</p>
+
+  <h3>Tracing <span class="tag">app/telemetry.py</span></h3>
+  <ul>
+    <li>Turn on export: <code>adk web --otel_to_cloud</code> (Cloud Trace and Cloud Logging).</li>
+    <li>Sub-agent spans nest under the orchestrator's <code>execute_tool delegate_task</code> span because delegation runs in the same process and async flow. A test checks this instead of assuming it.</li>
+    <li>The <b>parent session id</b> is stamped as <code>harness.correlation_id</code> on every span during a delegation, plus the sub-agent's session state, session id and logs. One filter shows the whole flow.</li>
+    <li><code>harness.setup_ms</code> is the harness's own overhead; <code>harness.run_ms</code> is the sub-agent's model and tool time.</li>
+  </ul>
+
+  <h2>5. Evals with agents-cli</h2>
+  <ul>
+    <li><code>tests/eval/datasets/skill-selection-dataset.json</code>: 8 cases. One per skill, two multi-intent, one "status only" case that must not trigger refunds, and two that must not delegate at all.</li>
+    <li><code>skill_selection</code> metric: deterministic, no judge model. Score 1 only if the delegated skills equal the expected set, so a missing skill, an extra skill, or any delegation for a trivial question scores 0. It fails closed on unknown prompts or unreadable traces.</li>
+    <li>Run: <code>agents-cli eval run --dataset tests/eval/datasets/skill-selection-dataset.json --config tests/eval/eval_config.yaml</code></li>
+  </ul>
+
+  <h2>6. Identity and credentials</h2>
+  <div class="card ok">
+    <b>Prefer Agent Identity</b> on Agent Runtime, Gemini Enterprise and Cloud Run: a per-agent SPIFFE-based identity,
+    short-lived certificate-bound tokens, no long-lived keys. Real tools use Application Default Credentials.
+  </div>
+  <div class="card warn">
+    <b>Gotcha:</b> redeploying creates a new principal, so re-run <code>deploy/iam.sh</code> after every deploy.
+    Deleting an agent leaves its bindings behind (<code>./deploy/iam.sh remove</code>).
+  </div>
+
+  <h2>7. Run it</h2>
+<pre><code>python -m pytest -q                    # 50 offline tests, no model or network
+export GOOGLE_API_KEY=...              # or Vertex AI credentials
+adk web                                # chat in a local UI
+adk web --otel_to_cloud                # same, with traces in Cloud Trace
+agents-cli eval run --dataset tests/eval/datasets/skill-selection-dataset.json \
+                    --config tests/eval/eval_config.yaml</code></pre>
+
+  <h2>8. Honest limits</h2>
+  <div class="card warn">
+    <ul style="margin:0">
+      <li><b>Verified here:</b> the harness runs end to end against scripted models (real ADK runner, sessions, tool dispatch and spans), ADK's own loader discovers the app, and the tests fail when the code is deliberately broken (serialized delegation, no correlation stamping, ignored model, detached span context).</li>
+      <li><b>Not verified here:</b> behaviour with a live Gemini model (does it pick the right skills, write good summaries, emit parallel calls), how Cloud Trace renders the spans, <code>agents-cli eval run</code> itself, and <code>deploy/iam.sh</code> against a real project.</li>
+      <li>Model names are placeholders; edit the allowlist in <code>config.py</code>.</li>
+      <li>Each delegation adds model round trips (a few seconds). Measure with the trace attributes before optimizing.</li>
+      <li>The sandbox cannot block the network; use an egress allowlist or a managed executor in production.</li>
+      <li>Reusing ADK's running compaction summary instead of a per-call summary (optional in the plan) is not implemented.</li>
+    </ul>
+  </div>
+
+  <footer>Sources: adk.dev (context compaction, Agents CLI), Google Cloud Agent Identity docs, and the installed ADK 2.13 and agents-cli 1.11 packages.</footer>
+</main>
+</body>
+</html>

@@ -1,0 +1,703 @@
+{
+  "eval_set_id": "eval_set_1",
+  "name": "eval_set_1",
+  "eval_cases": [
+    {
+      "eval_id": "what_the_status_of_order_A100_and_sales_in_west",
+      "conversation": [
+        {
+          "invocation_id": "e-1bd1f2d0-0835-47f7-85a9-14f338a8424b",
+          "user_content": {
+            "parts": [
+              {
+                "text": "what the status of order A100 and sales in west regions and refund policy?"
+              }
+            ],
+            "role": "user"
+          },
+          "final_response": {
+            "parts": [
+              {
+                "text": "The status of order A100 was delivered by UPS 5 days ago.\n\nSales in the west regions are:\nAugust: 100\nSeptember: 120\nOctober: 150\n\nThe total sales for these months are 370. There is a consistent upward trend in sales, with an increase from 100 in August to 150 in October.\n\nRegarding the refund policy, I can help with that. Please provide the order ID."
+              },
+              {
+                "text": ""
+              }
+            ],
+            "role": "model"
+          },
+          "intermediate_data": {
+            "invocation_events": [
+              {
+                "author": "harness_root",
+                "content": {
+                  "parts": [
+                    {
+                      "function_call": {
+                        "id": "adk-69792bcb-9666-4957-8dc7-6ba360c03da7",
+                        "args": {
+                          "skill_name": "order-support",
+                          "task": "What is the status of order A100?",
+                          "context_summary": "The user is asking about the status of a specific order. This skill is being called to retrieve the order status for order A100."
+                        },
+                        "name": "delegate_task"
+                      }
+                    },
+                    {
+                      "function_call": {
+                        "id": "adk-0d6d884b-b3d6-47e5-80c0-daa603604dcc",
+                        "args": {
+                          "skill_name": "sales-analysis",
+                          "task": "Analyze sales in the west regions.",
+                          "context_summary": "The user is asking for sales analysis. This skill is being called to provide sales data specifically for the west regions."
+                        },
+                        "name": "delegate_task"
+                      }
+                    },
+                    {
+                      "function_call": {
+                        "id": "adk-4ebfdfac-eee1-439a-9def-8a0a6494c422",
+                        "args": {
+                          "task": "Explain the refund policy.",
+                          "skill_name": "refund-policy",
+                          "context_summary": "The user is asking about the refund policy. This skill is being called to provide information on how refunds work."
+                        },
+                        "name": "delegate_task"
+                      }
+                    },
+                    {
+                      "text": ""
+                    }
+                  ],
+                  "role": "model"
+                },
+                "usage_metadata": {
+                  "candidates_token_count": 174,
+                  "candidates_tokens_details": [
+                    {
+                      "modality": "TEXT",
+                      "token_count": 174
+                    }
+                  ],
+                  "prompt_token_count": 649,
+                  "prompt_tokens_details": [
+                    {
+                      "modality": "TEXT",
+                      "token_count": 649
+                    }
+                  ],
+                  "thoughts_token_count": 106,
+                  "total_token_count": 929,
+                  "traffic_type": "ON_DEMAND"
+                },
+                "model_version": "gemini-2.5-flash"
+              },
+              {
+                "author": "harness_root",
+                "content": {
+                  "parts": [
+                    {
+                      "function_response": {
+                        "id": "adk-69792bcb-9666-4957-8dc7-6ba360c03da7",
+                        "name": "delegate_task",
+                        "response": {
+                          "skill": "order-support",
+                          "status": "ok",
+                          "result": "Your order A100 was delivered by UPS 5 days ago."
+                        }
+                      }
+                    },
+                    {
+                      "function_response": {
+                        "id": "adk-0d6d884b-b3d6-47e5-80c0-daa603604dcc",
+                        "name": "delegate_task",
+                        "response": {
+                          "skill": "sales-analysis",
+                          "status": "ok",
+                          "result": "Sales in the west regions are:\nAugust: 100\nSeptember: 120\nOctober: 150\n\nThe total sales for these months are 370. There is a consistent upward trend in sales, with an increase from 100 in August to 150 in October."
+                        }
+                      }
+                    },
+                    {
+                      "function_response": {
+                        "id": "adk-4ebfdfac-eee1-439a-9def-8a0a6494c422",
+                        "name": "delegate_task",
+                        "response": {
+                          "skill": "refund-policy",
+                          "status": "ok",
+                          "result": "I can help with that. Please provide the order ID.\n"
+                        }
+                      }
+                    }
+                  ],
+                  "role": "user"
+                }
+              },
+              {
+                "author": "harness_root",
+                "usage_metadata": {
+                  "candidates_token_count": 104,
+                  "candidates_tokens_details": [
+                    {
+                      "modality": "TEXT",
+                      "token_count": 104
+                    }
+                  ],
+                  "prompt_token_count": 911,
+                  "prompt_tokens_details": [
+                    {
+                      "modality": "TEXT",
+                      "token_count": 911
+                    }
+                  ],
+                  "thoughts_token_count": 232,
+                  "total_token_count": 1247,
+                  "traffic_type": "ON_DEMAND"
+                },
+                "model_version": "gemini-2.5-flash"
+              }
+            ]
+          },
+          "creation_timestamp": 1792951621.2517152
+        }
+      ],
+      "session_input": {
+        "app_name": "app",
+        "user_id": "user"
+      },
+      "creation_timestamp": 1792951747.974048
+    },
+    {
+      "eval_id": "how_can_you_help_me",
+      "conversation": [
+        {
+          "invocation_id": "e-c699e332-ddf9-4e91-a9a8-c3a7854545d5",
+          "user_content": {
+            "parts": [
+              {
+                "text": "how can you help me?"
+              }
+            ],
+            "role": "user"
+          },
+          "final_response": {
+            "parts": [
+              {
+                "text": "I can help with questions about order status, shipping, and delivery, refund eligibility, and sales analysis by region or product.\n"
+              }
+            ],
+            "role": "model"
+          },
+          "intermediate_data": {
+            "invocation_events": [
+              {
+                "author": "harness_root",
+                "usage_metadata": {
+                  "candidates_token_count": 26,
+                  "candidates_tokens_details": [
+                    {
+                      "modality": "TEXT",
+                      "token_count": 26
+                    }
+                  ],
+                  "prompt_token_count": 637,
+                  "prompt_tokens_details": [
+                    {
+                      "modality": "TEXT",
+                      "token_count": 637
+                    }
+                  ],
+                  "total_token_count": 663,
+                  "traffic_type": "ON_DEMAND"
+                },
+                "model_version": "gemini-2.5-flash"
+              }
+            ]
+          },
+          "creation_timestamp": 1792950462.596333
+        },
+        {
+          "invocation_id": "e-7dfb11c5-e681-48f7-9f0f-71130d5d416a",
+          "user_content": {
+            "parts": [
+              {
+                "text": "what different skills you have?"
+              }
+            ],
+            "role": "user"
+          },
+          "final_response": {
+            "parts": [
+              {
+                "text": "My skills include:\n*   **order-support**: Look up order status, shipping, and delivery questions.\n*   **refund-policy**: Decide whether an order is eligible for a refund and explain why.\n*   **sales-analysis**: Analyze sales numbers by region or product."
+              }
+            ],
+            "role": "model"
+          },
+          "intermediate_data": {
+            "invocation_events": [
+              {
+                "author": "harness_root",
+                "usage_metadata": {
+                  "candidates_token_count": 60,
+                  "candidates_tokens_details": [
+                    {
+                      "modality": "TEXT",
+                      "token_count": 60
+                    }
+                  ],
+                  "prompt_token_count": 669,
+                  "prompt_tokens_details": [
+                    {
+                      "modality": "TEXT",
+                      "token_count": 669
+                    }
+                  ],
+                  "total_token_count": 729,
+                  "traffic_type": "ON_DEMAND"
+                },
+                "model_version": "gemini-2.5-flash"
+              }
+            ]
+          },
+          "creation_timestamp": 1792950494.548789
+        },
+        {
+          "invocation_id": "e-69217ba2-ec61-4948-b043-67939ac3ea7f",
+          "user_content": {
+            "parts": [
+              {
+                "text": "What is the order data set contains"
+              }
+            ],
+            "role": "user"
+          },
+          "final_response": {
+            "parts": [
+              {
+                "text": "I cannot provide details about the internal data sets. I can only use my tools to answer your questions.",
+                "thought_signature": "AY89a1_SKuP9yneRcFImHHA7Xu06-d15Zumu9HrxrQSfaUTovLZWd4PZWC07l5QyzfZUPN7agFVdEDhf90msKfaNRMmcIVMYBfCMx1xoXAEdFguenEyshJU1jzAmZWv6Pmx_ZVr_nY6nRNNAUP0qf8buuRNa9rAURNAHXcbhHU0QKzL_m8b_2dSZgGnP9wcwaVv5sjsrOLMl0aCNLaDkrYwCwq21DCRRdTiOMxh2jlM7_bKBr65bSVk3SE8EFC35fjZjlGxRIYERqd82U6_NphkeAyKqHGim0oqrKawGNF5_zdRZLWHg8adoNvVh99OnSz1S8ntD3WeI-fLlchzSPjOpNhTdauC4FYxvvSrCUOqUFFRDDp6d19eXX9qN7vXM39C89sMRHuwg29buuiND6Rvkvy5QzXAhV_hKelnknKFEsDxw8jiNXQOMz4TtWVN-AQHBduL9rehLrSDn5M06CsBeCCc6xbL1Moz5glqD3LpxrYpKLBoXzO_eF4ZzAN8TeZxPVA2uP1brIplqX_gWt4xNal3gHVSg7RoDrOgA3lcG3pU9Az8l4rnAcYzoG5zY_0mSasWd1PvoqRPWpJJCjY1FtlnXNoB3"
+              }
+            ],
+            "role": "model"
+          },
+          "intermediate_data": {
+            "invocation_events": [
+              {
+                "author": "harness_root",
+                "usage_metadata": {
+                  "candidates_token_count": 21,
+                  "candidates_tokens_details": [
+                    {
+                      "modality": "TEXT",
+                      "token_count": 21
+                    }
+                  ],
+                  "prompt_token_count": 736,
+                  "prompt_tokens_details": [
+                    {
+                      "modality": "TEXT",
+                      "token_count": 736
+                    }
+                  ],
+                  "thoughts_token_count": 70,
+                  "total_token_count": 827,
+                  "traffic_type": "ON_DEMAND"
+                },
+                "model_version": "gemini-2.5-flash"
+              }
+            ]
+          },
+          "creation_timestamp": 1792950681.725764
+        },
+        {
+          "invocation_id": "e-6ea56478-6d9e-46ad-8542-e66071a19e7e",
+          "user_content": {
+            "parts": [
+              {
+                "text": "what is the status of order A100"
+              }
+            ],
+            "role": "user"
+          },
+          "final_response": {
+            "parts": [
+              {
+                "text": "Order A100 was delivered by UPS 5 days ago."
+              }
+            ],
+            "role": "model"
+          },
+          "intermediate_data": {
+            "invocation_events": [
+              {
+                "author": "harness_root",
+                "content": {
+                  "parts": [
+                    {
+                      "function_call": {
+                        "id": "adk-c514c0c9-706d-4e8d-94d2-926c49908e62",
+                        "args": {
+                          "skill_name": "order-support",
+                          "context_summary": "The user is asking for the status of order A100. Delegating to order-support to retrieve this information.",
+                          "task": "Find the status of order A100."
+                        },
+                        "name": "delegate_task"
+                      },
+                      "thought_signature": "AY89a18kGCYWUhocmcKrxIHgdwDzBH7wihljQL_RF0ecZLbi2wPYY7PphJw2xM4gXuc-a5d5FTJAXJ6PobHrvSWojr0Yxm99D6iW06nzAS6jATb4c-M8CvrAD89etZmxwsyU0hpgc8RNaOgX3LdvPqEHoRA_rzues5_HHp8UL8haXm5C0dCFpJrEpYNd1UXeajJo49yn1uenSa8gWOMMqgEdkS_5eX650vX5SFUzJnzzNiQBHwRlPt1XyyGtOCt2uFlhdO9vFB_A3ZPI3cQEL7SkGOrVTchQTiYY3MzDurSSMV1yEihRXY8sql2YH6zqz1XgWRowpop-xbDi3k2tAVFlOfZWWY3ImUYEAXI1M9FQkaP5BSDEclrXzi0Z4eIFS0ffHqW1CPjTJBKTDql25j7vn0Tl7tjmn1gkANeywlALIX8uSZuizicZSjwLcNJR9B8_jaijNZV9sVUYqJSfJD8h9jnNTEEPEMyw6BAqHkDjaZeYwLPSFj6j3BDm6QWn57f2v6anqKi08jCXqSZDNMI5HQYh3amOq3atnax31-NgKU4wbKQumevmoyztruoJNt-oHoc4crr4_vZnJ3DqaCut5O84S3pOz3xfTaLVfIAgIjS4nhLQjpZCs9aa3MrBVkbY9wrPEUzW1aYqfOE93yATN5MsSLrsX8Fq_Dr8B3rqzraTGnKZScuqwIwXs8nC3XzQApUi7hZ_SfB8gYqKkLOswgKl0I-A63bV1EHfNK4Wyx2LLFz9"
+                    }
+                  ],
+                  "role": "model"
+                },
+                "usage_metadata": {
+                  "candidates_token_count": 60,
+                  "candidates_tokens_details": [
+                    {
+                      "modality": "TEXT",
+                      "token_count": 60
+                    }
+                  ],
+                  "prompt_token_count": 767,
+                  "prompt_tokens_details": [
+                    {
+                      "modality": "TEXT",
+                      "token_count": 767
+                    }
+                  ],
+                  "thoughts_token_count": 117,
+                  "total_token_count": 944,
+                  "traffic_type": "ON_DEMAND"
+                },
+                "model_version": "gemini-2.5-flash"
+              },
+              {
+                "author": "harness_root",
+                "content": {
+                  "parts": [
+                    {
+                      "function_response": {
+                        "id": "adk-c514c0c9-706d-4e8d-94d2-926c49908e62",
+                        "name": "delegate_task",
+                        "response": {
+                          "skill": "order-support",
+                          "status": "ok",
+                          "result": "Order A100 was delivered by UPS 5 days ago."
+                        }
+                      }
+                    }
+                  ],
+                  "role": "user"
+                }
+              },
+              {
+                "author": "harness_root",
+                "usage_metadata": {
+                  "candidates_token_count": 14,
+                  "candidates_tokens_details": [
+                    {
+                      "modality": "TEXT",
+                      "token_count": 14
+                    }
+                  ],
+                  "prompt_token_count": 956,
+                  "prompt_tokens_details": [
+                    {
+                      "modality": "TEXT",
+                      "token_count": 956
+                    }
+                  ],
+                  "total_token_count": 970,
+                  "traffic_type": "ON_DEMAND"
+                },
+                "model_version": "gemini-2.5-flash"
+              }
+            ]
+          },
+          "creation_timestamp": 1792950764.2371871
+        },
+        {
+          "invocation_id": "e-4bbe299f-dae4-4744-b66c-135c3ba5d2f3",
+          "user_content": {
+            "parts": [
+              {
+                "text": "can you check how many orders are place and what is the sales west and provide sale analysis?"
+              }
+            ],
+            "role": "user"
+          },
+          "final_response": {
+            "parts": [
+              {
+                "text": "I'm sorry, I wasn't able to get the sales analysis. There was an error reaching the sales analysis service."
+              }
+            ],
+            "role": "model"
+          },
+          "intermediate_data": {
+            "invocation_events": [
+              {
+                "author": "harness_root",
+                "content": {
+                  "parts": [
+                    {
+                      "function_call": {
+                        "id": "adk-db36239c-d9bc-456c-b580-5ac1db47f21e",
+                        "args": {
+                          "skill_name": "sales-analysis",
+                          "task": "Provide the total number of orders and analyze sales for the west region.",
+                          "context_summary": "The user is asking for the total number of orders and sales analysis for the west region. Delegating to sales-analysis to provide this information."
+                        },
+                        "name": "delegate_task"
+                      },
+                      "thought_signature": "AY89a1_sW_blZJrEf4-fdH8JCB2UbNf7TaFdVFVS9t2Ugd0oaiWaGOuHDxM4IqkxYSka-nhNxsgfA3HFwKFJc151IlAJVVYBVggtwDvZmNU0BywafOfSil51_QGuqn0OWkjF_udBR9RqfJWRMR7ZXiKcfTm1StWYpAEqPy0lY5DM4xC-QT3vzP7g3jmOLS_rCXaCH7BT9aQBW6i1zU2cUQuEr1MCHp29h1ggnHofAg_i0gOEOEp8LADtnqIJdX5XzQ_CJ27mg1j5M7N9-L_hu9kwrMAKPyKDQE1wjoq7xGevIAjHPJZd0q1GgKILcU2VOaaaxkgDSclmF2gmF5RUz1gXHmysu2RC2HadTT2LYSXwbSsqCHMZ2G7yAV9HHA9tGtPxrVzgmIGxWv-TO-PX-U4M18prpNy14bTglrdtdqCzqrxMe9crLGDt1pKhtq7XoktewM49v5krytJQcJ6Sv4J3iyLo1LbWxghjynWnZT6jWalE5QapGipmZW8wuLcTv7vvU0mJR5caKZ9fFJBaTgpJtipvOD2W_wHu_lp0dv7LP6F4pAQOsdMUNXhCrIeGrXi2-J7y1E8_fAOWJZknwnUAstVQeFXiYlr977pRmxWdZAPl9ea-soOy3eRHcioPSdTSqJXUJUtV_Ooe8uUqIR9R796DC-l43sit0ScFMBeGxqceMI5RMpRk1bYIcigJldkgaUDivaBQBrumwe7W6ZHn_2rtr5zlXDoFdCX_yeIg5DfuJ3KgJl43l8v5w7FOVGyDAQbFzG9_4fJscPhhqgP24jbiDMlY5eOfjPWK2M5ZREfXMYInrzYgRjwLSDlgxflW-LbRBkoMjCPV8rpixCGLriqgi7vxcy58nZELYfO_B2Xq8YcOd09N1aPqN2Owvwbt-L49TQZL8K3MjZ2708LBfPuNwsnIAZOMufVPhU-M8CGbNurSn35pZzh48_YNyUvg5sXi-8osevYkswyTqhW05YEBKc3C2IIF75Ba4yGitSHH1PryWaeAdg3GGTX_JHDDakDQ6-Z9Qsutor26GqClAa8eD6Y0gDRtDjEk6WRIHKvUvnF65yQ6b3IkWlkJjaB1TOGNOdgW_IRpkk8OR94q3jpeJgXrn0LgmDuHdwGKJ0byYPogdWX992tqSdU_5_BjboUJXKkcBo6QspGRo2kT4cOiUXRQ22UaxGeNCxHQ76yntk1EA0eXIfqTlkdZZQLqOTy0oJz9_s9FfUnvJsA3Rs039ZkEq9dMBClGytcpS1zU0d6wjZ8XhDEnuN_amS-N4x4aoWz5HGg5UKraoIrBe9qfMlOBSUn8K-xORZlM0gugDshZjB0X2JEVk95a5UCpJTC2XTBEUABcgVlU1COWzTUJQh_-tJRgLWjILFVj1BGEDCxG1dD73fObXVA1RI5mk91_DupbWZfn3NyrkMwJu0YMYbLt5HcslycrxhFGgfVbOTMMgnJiNw80o8fsVnYQI3CGxnSR9TDb2mh3_ZD2jF5AplSQdQ=="
+                    }
+                  ],
+                  "role": "model"
+                },
+                "usage_metadata": {
+                  "candidates_token_count": 68,
+                  "candidates_tokens_details": [
+                    {
+                      "modality": "TEXT",
+                      "token_count": 68
+                    }
+                  ],
+                  "prompt_token_count": 872,
+                  "prompt_tokens_details": [
+                    {
+                      "modality": "TEXT",
+                      "token_count": 872
+                    }
+                  ],
+                  "thoughts_token_count": 236,
+                  "total_token_count": 1176,
+                  "traffic_type": "ON_DEMAND"
+                },
+                "model_version": "gemini-2.5-flash"
+              },
+              {
+                "author": "harness_root",
+                "content": {
+                  "parts": [
+                    {
+                      "function_response": {
+                        "id": "adk-db36239c-d9bc-456c-b580-5ac1db47f21e",
+                        "name": "delegate_task",
+                        "response": {
+                          "skill": "sales-analysis",
+                          "status": "error",
+                          "error": "ClientError: 404 NOT_FOUND. {'error': {'code': 404, 'message': 'Publisher model `projects/ecom-cx-agent/locations/global/publishers/google/models/gemini-2.5-pro` was not found or your project does not have access to it. Ensure you are using a valid model name and that the model is available in the s"
+                        }
+                      }
+                    }
+                  ],
+                  "role": "user"
+                }
+              },
+              {
+                "author": "harness_root",
+                "usage_metadata": {
+                  "candidates_token_count": 26,
+                  "candidates_tokens_details": [
+                    {
+                      "modality": "TEXT",
+                      "token_count": 26
+                    }
+                  ],
+                  "prompt_token_count": 1262,
+                  "prompt_tokens_details": [
+                    {
+                      "modality": "TEXT",
+                      "token_count": 1262
+                    }
+                  ],
+                  "total_token_count": 1288,
+                  "traffic_type": "ON_DEMAND"
+                },
+                "model_version": "gemini-2.5-flash"
+              }
+            ]
+          },
+          "creation_timestamp": 1792950880.3010292
+        },
+        {
+          "invocation_id": "69d47e9c-794f-4027-b185-3d8c790a21d1",
+          "user_content": {
+            "parts": []
+          },
+          "intermediate_data": {}
+        },
+        {
+          "invocation_id": "e-d8903792-a5e0-455b-8145-25b18c939bca",
+          "user_content": {
+            "parts": [
+              {
+                "text": "what the status of order A100 and sales in west regions"
+              }
+            ],
+            "role": "user"
+          },
+          "final_response": {
+            "parts": [
+              {
+                "text": "I'm sorry, I wasn't able to retrieve the sales data for the west region. There was an error when trying to access the sales analysis tool."
+              }
+            ],
+            "role": "model"
+          },
+          "intermediate_data": {
+            "invocation_events": [
+              {
+                "author": "harness_root",
+                "content": {
+                  "parts": [
+                    {
+                      "text": "Order A100 was delivered by UPS 5 days ago. I will now look into sales in the west region for you.",
+                      "thought_signature": "AY89a1-1JK9aFakt7o6OlSHwVeDmzc7_NqIwzW8guuWImjEa74XO5BoTiIKfEYi9oXcqTtlOhnIRb52tvtMVJTF5D2QkYFhdx96D97zP9je96denWxCosKD5SoQzUHwz4rympyRpt3rftNTVOLj_0jbT9e5jxp54WD3zMMmOJYLQJv2qyX1TtkwIcOiRZrAapvuRABfRXmWbVdg2gfZ3wjxCHJn3InGPpo0hF7KO80-C177ijrR73x83autklb89aTZ0sfm4IoT8Z_buDzLd_b_laRMcS3CtoFiBMAWTSwuogdi5JwqsIy16XI4427J0VY76VAd6QNs9ekleQiprrEuhUTCw65dfMhGmPPRpVu7FC_eWNy-XMvtOSk2F8WJhYi67eh40XJ1yAerI1-4Qb9aQXurr4y3-Gt9DaQIBePc5FdUY57dZ2DQ1_DsnbTj3POLymoAppUqJWGEksLn-W_XbkqoV9EsQv-zljep3Kvo_KkkU8NJinvcPQNtc5mOtiVAN1tv_m0VQJoabgyhD1dYBoU4J3DKywHhS1OD-QTC96nau_GyGJYGDqTJxFWgZd7nd5rXnoreu76HaSDvO-98ss_MYYvtrjbUv1Rt4btNJVhAaGjjG24HG_KhsBDr99bHJk_VMcXYZjcc0sJRDh0GiSPElXufnP8FuDY1tlAaLe6_CjLKYe0ZgWo95g_P-Qyn0gEZGxoB2c9yH2o1xszN-jCBLAUWKAm3kxutgP3E6_3OA5coK-GaPBYNz1tJkZwL-jcUncoPcu3jiJH8fukkVHcZ9t0JtvM5-eda6IDKQgWFENDwXlxgwvzQ9ETljRtkB8EVPtSwr1aUQP3GXQl0mF03tVEF9A7M-TWp_Np2oZeGHkMXQSF3LRCdVrGEiCEb661qIw2BF1IFFUpoUjRtpWbB_leyO5bdRDZB9NZ6wp9Y2MEN9moVNbZCRpHjhsz1KF21AihmfCQXwD9D9Q8bbaOEb9VdpQxkmpWIcItiYi0sPbERRvzJAXxD-nBhG5UOQRfCxwYb6-my6UeZ1M6Z7l0UGxrZVZHBkjr_lXrlY7ia6PDd_yaaBCP-IANH8kE511y2pZ_fsXbU49cVBZYmLhHBZ5iZlNB9b-jiLrY_g_nf6gLX-qBLQWQQEDGjRFR-1rSoS6hVulMQH-6LAcIFqyG4WJzx9sLT1cBvYcxDpV4rswXpNDjzKQGeKMwLKF_MkY0y5GKc2kJZ7e5-Hl12LCJJBgZj0pObqyvE90KQWsOxkQMtrUJVzEhWWTHMMSeUTVItMzvb9gtm1b65oqW4iwpSE-8QAY4LvjNr4RObNalGVg1SID61-n-GoLhnFdy8gzXrYtAgBRglciZim9X9gGM1hcHNJbdO7S4ALhEM5_uHEg6OafKo26zos2ZTGZ9-BlL90SdagtjnVpsEqZoTZZ0mkvD2mHLToIjfXV5BLH-rIMAiIK6zyL-Hs-eOzDu90g4XycplDYGWUMR3481kjmru3bghmdKNhWnw="
+                    },
+                    {
+                      "function_call": {
+                        "id": "adk-a672a0ea-ae1e-4f92-bb20-5dd5d9d0bcd0",
+                        "args": {
+                          "skill_name": "sales-analysis",
+                          "task": "Retrieve sales data for the west region.",
+                          "context_summary": "The user wants to know the sales in the west region. This skill is being called to get that specific sales data."
+                        },
+                        "name": "delegate_task"
+                      }
+                    }
+                  ],
+                  "role": "model"
+                },
+                "usage_metadata": {
+                  "candidates_token_count": 84,
+                  "candidates_tokens_details": [
+                    {
+                      "modality": "TEXT",
+                      "token_count": 84
+                    }
+                  ],
+                  "prompt_token_count": 937,
+                  "prompt_tokens_details": [
+                    {
+                      "modality": "TEXT",
+                      "token_count": 937
+                    }
+                  ],
+                  "thoughts_token_count": 259,
+                  "total_token_count": 1280,
+                  "traffic_type": "ON_DEMAND"
+                },
+                "model_version": "gemini-2.5-flash"
+              },
+              {
+                "author": "harness_root",
+                "content": {
+                  "parts": [
+                    {
+                      "function_response": {
+                        "id": "adk-a672a0ea-ae1e-4f92-bb20-5dd5d9d0bcd0",
+                        "name": "delegate_task",
+                        "response": {
+                          "skill": "sales-analysis",
+                          "status": "error",
+                          "error": "ClientError: 404 NOT_FOUND. {'error': {'code': 404, 'message': 'Publisher model `projects/ecom-cx-agent/locations/global/publishers/google/models/gemini-2.5-pro` was not found or your project does not have access to it. Ensure you are using a valid model name and that the model is available in the s"
+                        }
+                      }
+                    }
+                  ],
+                  "role": "user"
+                }
+              },
+              {
+                "author": "harness_root",
+                "usage_metadata": {
+                  "candidates_token_count": 33,
+                  "candidates_tokens_details": [
+                    {
+                      "modality": "TEXT",
+                      "token_count": 33
+                    }
+                  ],
+                  "prompt_token_count": 1366,
+                  "prompt_tokens_details": [
+                    {
+                      "modality": "TEXT",
+                      "token_count": 1366
+                    }
+                  ],
+                  "total_token_count": 1399,
+                  "traffic_type": "ON_DEMAND"
+                },
+                "model_version": "gemini-2.5-flash"
+              }
+            ]
+          },
+          "creation_timestamp": 1792951001.66429
+        }
+      ],
+      "session_input": {
+        "app_name": "app",
+        "user_id": "user"
+      },
+      "creation_timestamp": 1792951797.4937758
+    },
+    {
+      "eval_id": "What_can_you_help_me_with",
+      "conversation": [
+        {
+          "invocation_id": "e-dca6e222-5ff1-489c-a7b1-72ba7bab99f9",
+          "user_content": {
+            "parts": [
+              {
+                "text": "What can you help me with?"
+              }
+            ],
+            "role": "user"
+          },
+          "final_response": {
+            "parts": [
+              {
+                "text": "I can help with:\n* Looking up order status, shipping, and delivery information.\n* Determining if an order is eligible for a refund and explaining the policy.\n* Analyzing sales numbers by region or product."
+              }
+            ],
+            "role": "model"
+          },
+          "intermediate_data": {
+            "invocation_events": [
+              {
+                "author": "harness_root",
+                "usage_metadata": {
+                  "candidates_token_count": 44,
+                  "candidates_tokens_details": [
+                    {
+                      "modality": "TEXT",
+                      "token_count": 44
+                    }
+                  ],
+                  "prompt_token_count": 638,
+                  "prompt_tokens_details": [
+                    {
+                      "modality": "TEXT",
+                      "token_count": 638
+                    }
+                  ],
+                  "total_token_count": 682,
+                  "traffic_type": "ON_DEMAND"
+                },
+                "model_version": "gemini-2.5-flash"
+              }
+            ]
+          },
+          "creation_timestamp": 1792948983.72032
+        }
+      ],
+      "session_input": {
+        "app_name": "app",
+        "user_id": "user"
+      },
+      "creation_timestamp": 1792951834.340241
+    }
+  ],
+  "creation_timestamp": 1792951727.656029
+}

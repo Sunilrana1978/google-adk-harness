@@ -1,0 +1,60 @@
+{
+  "eval_cases": [
+    {
+      "eval_case_id": "refund_single",
+      "prompt": {
+        "role": "user",
+        "parts": [{"text": "I received order A100 last week but it is the wrong size. Am I eligible for a refund?"}]
+      }
+    },
+    {
+      "eval_case_id": "order_status_single",
+      "prompt": {
+        "role": "user",
+        "parts": [{"text": "Where is my order B200 right now?"}]
+      }
+    },
+    {
+      "eval_case_id": "sales_single",
+      "prompt": {
+        "role": "user",
+        "parts": [{"text": "How did revenue in the west region trend from August to October?"}]
+      }
+    },
+    {
+      "eval_case_id": "multi_refund_and_sales",
+      "prompt": {
+        "role": "user",
+        "parts": [{"text": "Can order C300 still be refunded? Separately, which region grew faster from August to October, west or east?"}]
+      }
+    },
+    {
+      "eval_case_id": "multi_status_and_refund",
+      "prompt": {
+        "role": "user",
+        "parts": [{"text": "Order B200 is delayed. Tell me its shipping status and whether it qualifies for a refund."}]
+      }
+    },
+    {
+      "eval_case_id": "no_overtrigger_status_only",
+      "prompt": {
+        "role": "user",
+        "parts": [{"text": "What is the delivery status of order A100? I only need the status, nothing else."}]
+      }
+    },
+    {
+      "eval_case_id": "trivial_greeting_no_delegation",
+      "prompt": {
+        "role": "user",
+        "parts": [{"text": "Hi! What can you help me with?"}]
+      }
+    },
+    {
+      "eval_case_id": "out_of_scope_no_delegation",
+      "prompt": {
+        "role": "user",
+        "parts": [{"text": "What is the capital of France?"}]
+      }
+    }
+  ]
+}

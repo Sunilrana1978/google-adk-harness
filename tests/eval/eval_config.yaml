@@ -1,0 +1,9 @@
+# Run:  agents-cli eval run --dataset tests/eval/datasets/skill-selection-dataset.json \
+#                           --config tests/eval/eval_config.yaml
+metrics_to_run:
+  - skill_selection
+
+custom_metrics:
+  # Deterministic: no judge model. Checks WHICH skills the orchestrator delegated to.
+  - name: skill_selection
+    custom_function_file: skill_selection.py

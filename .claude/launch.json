@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "harness-playground",
+      "runtimeExecutable": "agents-cli",
+      "runtimeArgs": ["playground", "--port", "8000"],
+      "port": 8000
+    }
+  ]
+}

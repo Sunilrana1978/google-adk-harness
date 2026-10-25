@@ -1,0 +1,13 @@
+name: "harness-demo"
+acli_version: "1.1.0"
+agent_directory: "app"
+region: "us-east1"
+base_template: "local_harness-demo"
+generated_at: "2026-10-25T17:18:47.699796+00:00"
+language: "python"
+create_params:
+  deployment_target: "agent_runtime"
+  session_type: "none"
+  cicd_runner: "skip"
+  is_a2a: true
+  agent_guidance_filename: "GEMINI.md"
