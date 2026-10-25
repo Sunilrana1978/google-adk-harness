@@ -16,6 +16,45 @@ Python harness is written once. Developed and tested on ADK 2.13 (needs `google-
 | Observability | End-to-end tracing | `app/telemetry.py`, spans in `app/delegate.py` |
 | Latency | Direct answers, Flash router, parallel fan-out | `app/agent.py`, `app/config.py` |
 
+## Architecture
+
+```mermaid
+flowchart TD
+    U([User])
+
+    SK[("skills/*/SKILL.md<br/>name · description · tools · model")]
+    LD["app/skill_loader.py<br/>load_all() at import (fail fast)<br/>skill_index() cached by mtime/size"]
+    SK --> LD
+
+    subgraph ORCH["app/agent.py — root_agent (ROUTER_MODEL)"]
+        IDX["build_instruction()<br/>rebuilt every turn from skill_index()"]
+        DT["delegate_task — the orchestrator's only tool"]
+    end
+    LD --> IDX
+
+    U -->|message| ORCH
+    DT -->|"one call per independent part,<br/>same turn → concurrent asyncio tasks"| DEL
+
+    subgraph DEL["app/delegate.py — delegate_task(skill, task, context_summary)"]
+        BLD["Build ephemeral sub-agent:<br/>skill body + capped summary → instruction<br/>skill's own model · only its listed tools"]
+        RUN["Fresh InMemoryRunner session<br/>id = parent_session:skill:random"]
+        BLD --> RUN
+    end
+
+    RUN --> GRD["before_tool_guard<br/>app/guardrails.py"]
+    GRD --> TR["app/tools.py<br/>TOOL_REGISTRY"]
+    GRD --> SB["app/sandbox.py<br/>run_python: async subprocess,<br/>rlimits, empty env, temp cwd"]
+
+    DEL -->|"final text only<br/>(no intermediate reasoning)"| DT
+    DT -->|merge results| U
+
+    TEL["app/telemetry.py<br/>SpanProcessor stamps harness.correlation_id<br/>(= parent session id) on every span,<br/>including sub-agent spans"]
+    DEL -.-> TEL
+
+    CMP["App + EventsCompactionConfig<br/>compacts older events every 5 turns"]
+    ORCH -.-> CMP
+```
+
 ## How a request flows
 
 ```
